@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+.current-root,
+.current-root * {
+  box-sizing: border-box;
+}
+
+.current-root {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  color: #f3f0e6;
+  background: #f5f4ef;
+  font-family: 'Manrope', sans-serif;
+}
+
+.current-poster {
+  width: min(760px, 100%);
+  height: 580px;
+  position: relative;
+  overflow: hidden;
+  padding: 34px;
+  color: #f3f0e6;
+  background: #182a28;
+  border-radius: 8px;
+  isolation: isolate;
+  box-shadow: 0 22px 48px rgba(22, 39, 36, .14);
+}
+
+.current-poster::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 87% 13%, rgba(213, 165, 84, .25), transparent 35%),
+    linear-gradient(130deg, rgba(15, 37, 34, .1), transparent 45%),
+    linear-gradient(180deg, #263a34, #172522 72%);
+}
+
+.current-poster::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 310px;
+  height: 310px;
+  right: -140px;
+  top: 54px;
+  border: 1px solid rgba(221, 188, 125, .23);
+  border-radius: 50%;
+  box-shadow: 0 0 0 32px rgba(221, 188, 125, .035), 0 0 0 64px rgba(221, 188, 125, .025);
+}
+
+.current-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #c5cfc4;
+  font: 10px 'DM Mono', monospace;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.current-verified {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #dcb760;
+}
+
+.current-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d9b45e;
+  box-shadow: 0 0 0 3px rgba(217, 180, 94, .16);
+}
+
+.current-player-title {
+  margin: 58px 0 4px;
+  font: 600 clamp(32px, 4.4vw, 54px)/1 'Space Grotesk', sans-serif;
+  letter-spacing: -.06em;
+}
+
+.current-player-subtitle {
+  color: #bdc8bb;
+  font: 11px 'DM Mono', monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.current-rank-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.current-rank-seal {
+  width: 67px;
+  height: 67px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(216, 183, 113, .7);
+  border-radius: 50%;
+  color: #e2c679;
+  box-shadow: inset 0 0 0 5px rgba(216, 183, 113, .06);
+}
+
+.current-rank-copy strong {
+  display: block;
+  font: 600 21px 'Space Grotesk', sans-serif;
+}
+
+.current-rank-copy span {
+  color: #bbc7bb;
+  font: 10px 'DM Mono', monospace;
+  letter-spacing: .08em;
+}
+
+.current-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: 33px;
+  border: 1px solid rgba(231, 237, 222, .14);
+  background: rgba(231, 237, 222, .14);
+}
+
+.current-stat {
+  min-height: 78px;
+  padding: 14px 12px;
+  background: rgba(20, 39, 35, .66);
+}
+
+.current-stat b {
+  display: block;
+  font: 600 21px 'Space Grotesk', sans-serif;
+  letter-spacing: -.04em;
+}
+
+.current-stat small {
+  color: #aebcb0;
+  font: 9px 'DM Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.current-champions {
+  display: flex;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.current-champion {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(236, 225, 197, .27);
+}
+
+.current-champion img,
+.current-art-fallback {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  object-fit: cover;
+  border-radius: 3px;
+  background: #33463e;
+}
+
+.current-art-fallback {
+  display: grid;
+  place-items: center;
+  color: #e1bd72;
+  font: 15px 'Space Grotesk', sans-serif;
+}
+
+.current-champion strong,
+.current-champion small {
+  display: block;
+}
+
+.current-champion strong {
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.current-champion small {
+  color: #aebcb0;
+  font: 9px 'DM Mono', monospace;
+}
+
+.current-footer {
+  position: absolute;
+  right: 34px;
+  bottom: 20px;
+  left: 34px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #9eaea3;
+  font: 9px 'DM Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .current-root { padding: 16px; }
+  .current-poster { height: 580px; padding: 23px 19px 58px; }
+  .current-player-title { margin-top: 48px; font-size: 39px; }
+  .current-stats { grid-template-columns: repeat(2, 1fr); margin-top: 26px; }
+  .current-stat { min-height: 68px; }
+  .current-stat b { font-size: 19px; }
+  .current-champions { gap: 7px; }
+  .current-champion { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .current-champion img,
+  .current-art-fallback { width: 32px; height: 32px; flex-basis: 32px; }
+  .current-footer { right: 19px; bottom: 15px; left: 19px; }
+}

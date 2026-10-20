@@ -1,0 +1,89 @@
+## CRITICAL REQUIREMENT: Navigate to the public Champion Data tab
+
+The player profile is publicly accessible at:
+
+https://arenasweats.lol/na/Angel%20Teemo-666/profile/
+
+You must inspect the actual website and navigate to the **Champion Data** tab on this public profile.
+
+This is a mandatory data-discovery step, not an optional feature.
+
+### Step 1 — Open the correct public profile
+
+1. Open the exact URL above in a browser.
+2. Verify that the displayed player is Angel Teemo#666.
+3. Verify the region is NA. If the website defaults to another region, select NA using the site's normal region selector.
+4. Do not use my personal account, browser profile, private credentials, or authenticated session. Work exclusively from the publicly accessible profile.
+
+### Step 2 — Locate Champion Data
+
+1. Inspect the profile's available tabs and navigation controls.
+2. Find and click the tab labeled **Champion Data**.
+3. Wait for the tab's content to finish loading.
+4. Inspect the complete champion statistics displayed in that tab, including content that may require scrolling.
+5. Determine how the table or cards can be sorted, filtered, or paginated, and inspect the available champion records.
+
+Do not confuse the general profile overview, the global Champion leaderboard, or the champion-selection filter with the player's own Champion Data tab.
+
+If the tab is not immediately visible, inspect the public page's rendered DOM and publicly accessible network requests to understand how the tab loads its content. Use only normal public-site functionality and permitted public data access. Do not bypass access controls.
+
+### Step 3 — Extract the real champion statistics
+
+Collect the available records for the player's champions, preserving the exact values and labels shown on the website.
+
+For every champion, capture as many of these fields as the source provides:
+
+- Champion name and identifier.
+- Games played.
+- Wins and losses, if available.
+- Win rate.
+- Top-three finish rate.
+- Average placement.
+- Rating or champion-specific rank.
+- Best placement or relevant streaks.
+- Any additional useful champion-specific statistics.
+
+Inspect all available records before selecting the top three. Do not simply choose the first three champions shown on the page.
+
+### Step 4 — Define the top-three ranking
+
+Use this priority:
+
+1. If the website explicitly identifies the player's three best champions, use that ranking and document the source's criteria.
+2. Otherwise, inspect the available sorting controls and identify the most meaningful performance metric.
+3. Prefer a defensible performance ranking that accounts for both results and sample size, rather than ranking solely by games played.
+4. If a reliable composite ranking cannot be derived, rank by win rate with a minimum sample-size safeguard, using average placement as a tie-breaker. Document the rule and the sample-size threshold.
+5. If the available data is insufficient for a trustworthy ranking, state the limitation instead of manufacturing a definitive ranking.
+
+Do not mix overall player statistics with champion-specific statistics.
+
+### Step 5 — Build the poster from the extracted data
+
+Use the verified top-three champion records to populate the poster's three featured champion panels.
+
+Each panel must display the actual champion artwork, name, and available statistics. The overall player panel must use the correct overall profile statistics.
+
+Keep the extracted data separate from the poster-rendering code. Store it in a normalized data structure so it can be refreshed without redesigning the image.
+
+### Step 6 — Make the data update automatically
+
+Determine whether Champion Data is available through a stable, publicly accessible endpoint or can be retrieved reliably from the public profile.
+
+Implement a refresh process that:
+
+- Retrieves the latest available champion records.
+- Recalculates the top three using the documented ranking rule.
+- Updates the poster and its downloadable PNG.
+- Displays the last successful refresh time.
+- Preserves the last valid data snapshot when a refresh fails.
+- Respects the website's terms, rate limits, and reasonable caching requirements.
+
+Do not assume that changing the tab changes the URL or that the data is available in the initial HTML. Verify how the site actually loads the tab's contents.
+
+If live retrieval is blocked or unsupported, finish the poster and implement a clear data-import fallback. Explain the precise technical limitation and what is required to enable automatic updates.
+
+### Acceptance test
+
+Before declaring this complete, show evidence that you inspected the public profile's actual Champion Data tab and extracted the real champion records.
+
+The top three displayed on the finished poster must match those records and the documented ranking rule. A mockup, guessed champion list, generic leaderboard data, or manually invented statistics does not satisfy this requirement.

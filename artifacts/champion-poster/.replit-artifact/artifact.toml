@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "ArenaSweats Champion Poster"
+description = "A live, shareable player poster for Angel Teemo#666 using verified NA Champion Data from ArenaSweats. It shows overall stats, the site's three exposed champion records, downloadable PNG output, source notes, scheduled refresh, and a JSON import fallback."
+version = "1.0.0"
+id = "artifacts/champion-poster"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24142
+
+[services.development]
+run = "pnpm --filter @workspace/champion-poster run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/champion-poster", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/champion-poster/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24142"
+BASE_PATH = "/"

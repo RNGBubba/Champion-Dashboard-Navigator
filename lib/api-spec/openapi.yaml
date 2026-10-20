@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: champion-poster
+    description: Public ArenaSweats player poster data
 paths:
   /healthz:
     get:
@@ -24,6 +26,56 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /champion-poster:
+    get:
+      operationId: getChampionPoster
+      tags: [champion-poster]
+      summary: Get the latest verified player poster data
+      description: Returns the last valid snapshot and refreshes it when the server-side cache expires.
+      responses:
+        "200":
+          description: Current poster data, including stale data when an upstream refresh fails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChampionPosterSnapshot"
+  /champion-poster/refresh:
+    post:
+      operationId: refreshChampionPoster
+      tags: [champion-poster]
+      summary: Refresh player data from the public ArenaSweats profile
+      responses:
+        "200":
+          description: Refreshed data, or the last valid snapshot if the refresh fails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChampionPosterSnapshot"
+  /champion-poster/artwork/{championId}:
+    get:
+      operationId: getChampionPosterArtwork
+      tags: [champion-poster]
+      summary: Get same-origin champion artwork for reliable PNG export
+      parameters:
+        - name: championId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^[a-z0-9]+$"
+      responses:
+        "200":
+          description: Champion image encoded as a data URL
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChampionPosterArtwork"
+        "404":
+          description: Artwork unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +85,131 @@ components:
           type: string
       required:
         - status
+    ChampionPosterOverall:
+      type: object
+      required:
+        - games
+        - wins
+        - winRate
+        - topThreeRate
+        - averagePlacement
+        - bestTopThreeStreak
+        - bestWinStreak
+        - kda
+        - rating
+        - rank
+        - topPercentile
+        - leagueRank
+        - peakRank
+        - peakRating
+        - rankChange
+        - profileTier
+        - lastGameAt
+      properties:
+        games: { type: integer }
+        wins: { type: integer }
+        winRate: { type: number }
+        topThreeRate: { type: number }
+        averagePlacement: { type: number }
+        bestTopThreeStreak: { type: integer }
+        bestWinStreak: { type: integer }
+        kda: { type: string }
+        rating: { type: integer }
+        rank: { type: integer }
+        topPercentile: { type: number }
+        leagueRank: { type: string }
+        peakRank: { type: integer }
+        peakRating: { type: integer }
+        rankChange: { type: integer }
+        profileTier: { type: integer }
+        lastGameAt: { type: ["string", "null"], format: date-time }
+    ChampionPosterChampion:
+      type: object
+      required:
+        - id
+        - name
+        - sourceOrder
+        - championRank
+        - score
+        - games
+        - wins
+        - losses
+        - winRate
+        - topThreeRate
+        - averagePlacement
+        - kills
+        - assists
+        - goldEarned
+        - damageDealtToChampions
+        - damageTaken
+        - damageMitigated
+        - healing
+      properties:
+        id: { type: string }
+        name: { type: string }
+        sourceOrder: { type: integer }
+        championRank: { type: integer }
+        score: { type: number }
+        games: { type: integer }
+        wins: { type: integer }
+        losses: { type: integer }
+        winRate: { type: number }
+        topThreeRate: { type: number }
+        averagePlacement: { type: number }
+        kills: { type: integer }
+        assists: { type: integer }
+        goldEarned: { type: integer }
+        damageDealtToChampions: { type: integer }
+        damageTaken: { type: integer }
+        damageMitigated: { type: integer }
+        healing: { type: integer }
+    ChampionPosterSnapshot:
+      type: object
+      required:
+        - playerName
+        - region
+        - season
+        - sourceName
+        - sourceUrl
+        - lastSuccessfulRefresh
+        - refreshStatus
+        - refreshMessage
+        - overall
+        - champions
+        - rankingNote
+        - coverageNote
+        - reportedOverallGames
+        - exposedChampionGames
+      properties:
+        playerName: { type: string }
+        region: { type: string }
+        season: { type: string }
+        sourceName: { type: string }
+        sourceUrl: { type: string, format: uri }
+        lastSuccessfulRefresh: { type: string, format: date-time }
+        refreshStatus:
+          type: string
+          enum: [fresh, stale, seed, error]
+        refreshMessage: { type: ["string", "null"] }
+        overall:
+          $ref: "#/components/schemas/ChampionPosterOverall"
+        champions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChampionPosterChampion"
+        rankingNote: { type: string }
+        coverageNote: { type: string }
+        reportedOverallGames: { type: integer }
+        exposedChampionGames: { type: integer }
+    ChampionPosterArtwork:
+      type: object
+      required: [championId, dataUrl]
+      properties:
+        championId: { type: string }
+        dataUrl: { type: string }
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
 
